@@ -49,6 +49,19 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompact = false }) => {
     }
   };
 
+  // Convert task to the form expected by TaskForm
+  const getFormInitialData = (task: Task) => {
+    return {
+      title: task.title,
+      description: task.description,
+      // Convert ISO string to Date object if it exists
+      dueDate: task.dueDate ? new Date(task.dueDate) : null,
+      priority: task.priority,
+      status: task.status,
+      tags: task.tags
+    };
+  };
+
   return (
     <div className={cn(
       "task-card bg-card animate-fade-in",
@@ -71,7 +84,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompact = false }) => {
                   <DialogTitle>Edit Task</DialogTitle>
                 </DialogHeader>
                 <TaskForm
-                  initialData={task}
+                  initialData={getFormInitialData(task)}
                   taskId={task.id}
                 />
               </DialogContent>

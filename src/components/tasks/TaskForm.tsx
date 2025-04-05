@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -32,7 +31,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Priority, Status, Tag } from '@/types';
+import { Priority, Status, Tag, Task } from '@/types';
 
 const taskFormSchema = z.object({
   title: z.string().min(1, { message: 'Title is required' }),
@@ -44,8 +43,12 @@ const taskFormSchema = z.object({
 
 type TaskFormValues = z.infer<typeof taskFormSchema>;
 
+interface TaskFormInitialData extends TaskFormValues {
+  tags?: Tag[];
+}
+
 interface TaskFormProps {
-  initialData?: TaskFormValues;
+  initialData?: TaskFormInitialData;
   taskId?: string;
   onComplete?: () => void;
 }
@@ -76,12 +79,18 @@ const TaskForm: React.FC<TaskFormProps> = ({
     if (taskId) {
       updateTask(taskId, {
         ...data,
+        dueDate: data.dueDate ? data.dueDate.toISOString() : null,
         tags: selectedTags,
       });
     } else {
       addTask({
         ...data,
+        dueDate: data.dueDate ? data.dueDate.toISOString() : null,
         tags: selectedTags,
+        title: data.title,
+        description: data.description || "",
+        priority: data.priority,
+        status: data.status,
       });
     }
     

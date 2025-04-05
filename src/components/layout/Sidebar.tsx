@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Calendar, CheckSquare, Clock, Tag, User } from 'lucide-react';
+import { Calendar, CheckSquare, Clock, Tag, User, List, KanbanIcon } from 'lucide-react';
 import { useTaskStore } from '@/store/taskStore';
 import { cn } from '@/lib/utils';
 
@@ -23,7 +22,7 @@ const Sidebar = () => {
                     : "hover:bg-secondary"
                 )}
               >
-                <KanbanSquare className="h-4 w-4 mr-2" />
+                <KanbanIcon className="h-4 w-4 mr-2" />
                 Board View
               </button>
             </li>
